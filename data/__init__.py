@@ -32,30 +32,6 @@ def CreateSrcDataLoader(args):
     return source_dataloader
 
 
-def CreateValDataLoader(args, exp):
-    if args.target == 'cityscapes' and exp:
-        val_dataset = cityscapesDataSetLabel( args.data_dir_target,
-                                            args.data_list_val,
-                                            crop_size=image_sizes['cityscapes'],
-                                            mean=IMG_MEAN,
-                                            set='val' )
-    elif args.source == 'gta5':
-        val_dataset = GTA5DataSet_val( args.data_dir_target, args.data_list_target, crop_size=image_sizes['cityscapes'], 
-                                      resize=image_sizes['gta5'] ,mean=IMG_MEAN,
-                                      max_iters=args.num_steps * args.batch_size )
-    elif args.source == 'synthia':
-        val_dataset = SYNDataSet( args.data_dir, args.data_list, crop_size=image_sizes['cityscapes'],
-                                      resize=image_sizes['synthia'] ,mean=IMG_MEAN,
-                                      max_iters=args.num_steps * args.batch_size )
-    else:
-        raise ValueError('The source dataset mush be either gta5 or synthia')
-    
-    val_dataloader = data.DataLoader( val_dataset, 
-                                         batch_size=args.batch_size,
-                                         shuffle=True, 
-                                         num_workers=args.num_workers, 
-                                         pin_memory=True )    
-    return val_dataloader
 
 def CreateTestDataLoader(args):
     if args.set == 'val':
@@ -123,39 +99,7 @@ def CreateTrgDataLoader_trainset(args):
     return target_dataloader
 
 
-def CreateTrgDataSSLLoader(args):
-    target_dataset = cityscapesDataSet( args.data_dir_target, 
-                                        args.data_list_target,
-                                        crop_size=image_sizes['cityscapes'],
-                                        mean=IMG_MEAN, 
-                                        set=args.set )
-    target_dataloader = data.DataLoader( target_dataset, 
-                                         batch_size=1, 
-                                         shuffle=False, 
-                                         pin_memory=True )
-    return target_dataloader
-
-
-# use it to save pseudo labels
-def CreatePseudoTrgLoader(args):
-    target_dataset = cityscapesDataSetSSL( args.data_dir_target,
-                                           args.data_list_target,
-                                           crop_size=image_sizes['cityscapes'],
-                                           mean=IMG_MEAN,
-                                           max_iters=args.num_steps * args.batch_size,
-                                           set=args.set,
-                                           label_folder=args.label_folder )
-
-    target_dataloader = data.DataLoader( target_dataset,
-                                         batch_size=args.batch_size,
-                                         shuffle=True,
-                                         num_workers=args.num_workers,
-                                         pin_memory=True )
-
-    return target_dataloader
-
 # use it to load pseudo labels for contrastive loss
-
 def CreateTrgDataLoaderPseudo(args):
     if args.set == 'train' or args.set == 'trainval':
         target_dataset = cityscapesDataSetPseudoLabel( args.data_dir_target, 
