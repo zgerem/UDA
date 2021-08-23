@@ -103,6 +103,7 @@ def CreateTrgDataLoader_trainset(args):
 def CreateTrgDataLoaderPseudo(args):
     if args.set == 'train' or args.set == 'trainval':
         target_dataset = cityscapesDataSetPseudoLabel( args.data_dir_target, 
+                                                     args.label_folder,
                                                      args.data_list_target, 
                                                      crop_size=image_sizes['cityscapes'], 
                                                      mean=IMG_MEAN, 

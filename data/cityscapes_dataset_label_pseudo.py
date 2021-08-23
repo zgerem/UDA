@@ -7,8 +7,9 @@ from torch.utils import data
 
 class cityscapesDataSetPseudoLabel(data.Dataset):
     # for reading CS with labels
-    def __init__(self, root, list_path, crop_size=(11, 11), mean=(128, 128, 128), max_iters=None, set='train'):
+    def __init__(self, root, root2, list_path, crop_size=(11, 11), mean=(128, 128, 128), max_iters=None, set='train'):
         self.root = root    # cityscapes
+        self.root2 = root2
         self.list_path = list_path # list of image names
         self.crop_size = crop_size
         self.mean = mean
@@ -36,8 +37,8 @@ class cityscapesDataSetPseudoLabel(data.Dataset):
         image = Image.open(osp.join(   self.root, "leftImg8bit/%s/%s" % (self.set, name)   )).convert('RGB')
         
         # get pseudo label
-        root2 = '../results/pseudo_labels_gray'
-        root2 = str(root2)
+        # root2 = '../results/pseudo_labels_gray'
+        root2 = str(self.root2)
         name_pseudo = name.split('/')
         lbname_pseudo = name_pseudo[1]
         label_pseudo = Image.open(osp.join( root2, "%s" % (lbname_pseudo)   ))
