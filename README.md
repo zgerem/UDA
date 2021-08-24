@@ -9,7 +9,6 @@ Overall training consists of training two models. The first model will be traine
 The first model is trained by running the notebook `training_psuedolabel_backbone.ipynb`. Then, running `evaluation_pseudo.ipynb` will save the pseudo labels. 
 
 ## Training with pseudo labels
-Training of the second model consists of two steps. In the first step, the model will be initialized and trained with source images in target style by running the notebook `training_contrastive_step1.ipynb`. 
-In the second step, target images and pseudo labels will be used for training by running the notebook `training_contrastive_step1.ipynb`. In this step, the model will be initialized with the weights of the first step. Running `evaluation.ipynb` will give the results on validation data. 
+While training the second model, we use pseudo labels for target set. This time, we use contrastive loss and entropy minimization on target data in addition to cross entropy loss on source images in target style. The model will be trained by running notebook `training_contrastive.ipynb`. Then running `evaluation.ipynb` will give the results on validation data. 
 
 Code is adapted from [FDA](https://github.com/YanchaoYang/FDA)
