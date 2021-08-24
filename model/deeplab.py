@@ -125,13 +125,7 @@ class ResNet101(nn.Module):
         self.layer5 = self._make_pred_layer(Classifier_Module, 2048, [6, 12, 18, 24], [6, 12, 18, 24], num_classes)
         #self.layer5 = self._make_pred_layer(Classifier_Module, 64, [6, 12, 18, 24], [6, 12, 18, 24], num_classes)
         
-        self.conv = nn.Conv2d(
-            2048,
-            64,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            bias=False)
+        
         
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -174,11 +168,7 @@ class ResNet101(nn.Module):
         
         # size of x is torch.Size([1, 2048, 65, 129])
         x = self.layer4(x)
-        # size of x is torch.Size([1, 64, 65, 129])
-        #x = self.conv(x)
-        # size of x is torch.Size([1, 64, 512, 1024])
-        #x = nn.functional.interpolate(x, size=(h, w), mode='bilinear', align_corners=True)
-        #self.cont = x
+        
         # size of x is torch.Size([1, 19, 512, 1024])
         x = self.layer5(x)
         
