@@ -3,10 +3,8 @@ from torch.utils import data
 from data.gta5_dataset import GTA5DataSet
 from data.cityscapes_dataset import cityscapesDataSet
 from data.cityscapes_dataset_label import cityscapesDataSetLabel
-from data.cityscapes_dataset_SSL import cityscapesDataSetSSL
 from data.cityscapes_dataset_label_pseudo import cityscapesDataSetPseudoLabel
 from data.synthia_dataset import SYNDataSet
-from data.gta5_dataset_val  import GTA5DataSet_val
 from data.gta5_dataset_test  import GTA5DataSet_test
 IMG_MEAN = np.array((0.0, 0.0, 0.0), dtype=np.float32)
 image_sizes = {'cityscapes': (1024,512), 'gta5': (1280, 720), 'synthia': (1280, 760)}
